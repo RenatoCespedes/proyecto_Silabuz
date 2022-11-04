@@ -9,6 +9,41 @@ class Libro:
         self.__id_ISBN=""
         self.__editorial=""
         self.__autores=[]
+
+    #Metodos Set
+    def set_id(self,i):
+        self.__id=i
+        
+    def set_titulo(self,tittle):
+        self.__titulo=tittle
+    def set_genero(self,x):
+        self.__genero=x
+    def set_isbn(self,code):
+        self.__id_ISBN=code
+    def set_editorial(self,ed):
+        self.__editorial=ed
+    def set_autor(self,autor):
+        autor=autor.split(',')
+        for i in autor:
+            self.__autores.append(i)
+    def set_attributes(self,id,titulo,genero,isbn,editorial,autores):
+        self.__id=id
+        self.__titulo=titulo
+        self.__genero=genero
+        self.__id_ISBN=isbn
+        self.__editorial=editorial
+        self.__autores=autores
+    #Metodos Get
+    def get_attributes(self):
+        return self.__id,self.__titulo,self.__genero,self.__id_ISBN,self.__editorial,self.__autores
+    
+    def get_archivo(self):
+        return self.__archivo
+    def mostrar_libro(self):
+        id,tit,gen,isb,edi,auto=self.get_attributes()
+        print(f"{tit}, {gen}, {id}, {isb}, {edi}, {auto}")
+
+
 def leer_archivo():
     print("Leer archivos CSV o txt")
 def listar_libros():
