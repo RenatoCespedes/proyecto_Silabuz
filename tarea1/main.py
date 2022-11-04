@@ -134,42 +134,60 @@ class Sistema_libros:
                 self.lista_libros.remove(el)
                 return True
         return False
-def buscar_libro():
-    print("Buscar libro por ISBN o por título")
-    busqueda=input("Ingrese ISBN o título del libro: ")
-    for k in lista_libros:
-        if k.id_ISBN==busqueda or k.titulo==busqueda:
-            print(f"{k.titulo}, {k.genero}, {k.id_ISBN}, {k.editorial}, {k.autores}")
-def ordenar_libros():
-    print("Ordenar libros por título")
-    orden_lista=[]
-    for kv in lista_libros:
-        orden_lista.append(kv.titulo)
-    orden_lista_titulo=sorted(orden_lista)
-    lista_libros_nuevo=[]
-    for kv2 in orden_lista_titulo:
-        for kv1 in lista_libros:
-            if kv2==kv1.titulo:
-                lista_libros_nuevo.append(kv1)
-                print(f"{kv1.titulo}, {kv1.genero}, {kv1.id_ISBN}, {kv1.editorial}, {kv1.autores}")
-def buscar_libros_autor_eg():
-    print("Buscar libros por autor, editorial o género")
-    print("Buscar libro por autor")
-    autor=input("Ingrese el autor del libro: ").lower()
-    for nk in lista_libros:
-        for mk in nk.autores:
-            if mk.lower()==autor:
-                print(f"{nk.titulo}, {nk.genero}, {nk.id_ISBN}, {nk.editorial}, {nk.autores}")
-            else:
-                print("¡No hay resultados!")
-def buscar_libros_num_autor():
-    print("Buscar libros por el número de autores")
-    num_autor=int(input("Ingrese la cantidad de autores: "))
-    for numk in lista_libros:
-        if len(numk.autores)==num_autor:
-            print(f"{numk.titulo}, {numk.genero}, {numk.id_ISBN}, {numk.editorial}, {numk.autores}")
-        else:
-            print("¡No hay resultados!")
+    def buscar_libro(self):
+        busqueda=input("Ingrese ISBN o título del libro: ").lower()
+        for k in self.lista_libros:
+            if k.get_isbn().lower()==busqueda or k.get_titulo().lower()==busqueda:
+                id,titulo,genero,isbn,editoria,_=k.get_attributes()
+                print(f"{id} ,{titulo}, {genero}, {isbn}, {editoria}, ",end="")
+                k.mostrar_autores()
+    def ordenar_libros(self):
+        orden_lista=[]
+        orden_lista=[i.get_titulo().lower() for i in self.lista_libros]
+        orden_lista_titulo=sorted(orden_lista)
+        for kv2 in orden_lista_titulo:
+            for kv1 in self.lista_libros:
+                if kv2==kv1.get_titulo().lower():
+                    id,titulo,genero,isbn,editoria,_=kv1.get_attributes()
+                    print(f"{titulo}, {genero}, {isbn}, {editoria}, ",end="")
+                    kv1.mostrar_autores()
+    def buscar_libros_autor_eg(self):
+        print("Buscar libros por autor, editorial o género")
+        print("Buscar libro por autor")
+        entrada=input("Ingrese el autor del libro: ").lower()
+        for nk in self.lista_libros:
+            for mk in nk.get_autores():
+                if mk.lower()==entrada:
+                    id,titulo,genero,isbn,editoria,_=nk.get_attributes()
+                    nk.mostrar_autores()
+                    print(f"{titulo}, {genero}, {isbn}, {editoria} ")
+
+    def buscar_libro_editorial(self):
+        entrada=input("Ingrese la editorial del libro: ").lower()
+        for x in self.lista_libros:
+            if x.get_editorial().lower() ==  entrada:
+                print("Se encontro una coincidencia")
+                id,titulo,genero,isbn,editoria,_=x.get_attributes()
+                print(f"{id}, {titulo}, {genero}, {isbn}, ",end="")
+                x.mostrar_autores()
+    
+    def buscar_libro_genero(self):
+        entrada=input("Ingrese el genero del libro: ").lower()
+        for x in self.lista_libros:
+            if x.get_genero().lower() ==  entrada:
+                print("Se encontro una coincidencia")
+                id,titulo,genero,isbn,editoria,_=x.get_attributes()
+                print(f"{id}, {titulo}, {isbn}, {editorial}, ",end="")
+                x.mostrar_autores()
+    
+    def buscar_libros_num_autor(self):
+        num_autor=int(input("Ingrese la cantidad de autores: "))
+        for x in self.lista_libros:
+            if len(x.get_autores())==num_autor:
+                id,titulo,genero,isbn,editorial,_=x.get_attributes()
+                print(f"{id}, {titulo}, {genero}, {isbn}, {editorial}, ",end="")
+                x.mostrar_autores()
+    
 def editar_libros():
     print("Editar o actualizar datos de un libro")
 def guardar_libros():
