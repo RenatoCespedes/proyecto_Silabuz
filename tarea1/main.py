@@ -78,36 +78,62 @@ class Sistema_libros:
         id,_,_,_,_,_=a.get_attributes()
         return id
     #Funciones
+    
+    def leer_archivo(self):
+        name=input("Ingrese el nombre archivo csv a cargar: ")
+        with open(name) as f:
+            x=csv.reader(f)
+            next(x)
+            for row in x :
+                new_val=Libro()
+                new_val.set_id(row[0])
+                new_val.set_titulo(row[1])
+                new_val.set_genero(row[2])
+                new_val.set_isbn(row[3])
+                new_val.set_editorial(row[4])
+                lista=[]
+                for l in str(row[5]):
+                    if l.isalpha() or l==' ' or l==',':
+                        lista.append(l)
+                    new_row_5="".join(lista)
+                                     
+                val_autor=new_row_5.split(',')
 
-def leer_archivo():
-    print("Leer archivos CSV o txt")
-def listar_libros():
-    print("Listado de libros")
-    for v,a in enumerate(lista_libros):
-        print(f"{v} -> {a.titulo}, {a.genero}, {a.id_ISBN}, {a.editorial}, {a.autores}")
-def agregar_libro():
-    print("Agregar libro")
-    print("Ingrese los siguientes datos del libro: ")
-    nm=Libro()
-    nm.titulo=input("Título del libro: ")
-    nm.genero=input("Género del libro: ")
-    nm.id_ISBN=input("ID o ISBN: ")
-    nm.editorial=input("Editorial: ")
-    nmk=int(input("Ingrese la cantidad de autores: "))
-    autor=[]
-    for vk in range(nmk):
-        a=input(f"Ingrese el autor {vk+1}: ")
-        autor.append(a)
-    nm.autores=autor
-    lista_libros.append(nm)
-def eliminar_libro():
-    print("Eliminar libro")
-    eliminar=input("Ingrese el título del libro: ")
-    for el in lista_libros:
-        if el.titulo==eliminar:
-            lista_libros.remove(el)
-        else:
-            print("¡No se encontró el libro!")
+                for k in val_autor:
+                    new_val.set_autor(k)
+
+                self.lista_libros.append(new_val)
+    
+    def listar_libros(self):
+        print("Listado de libros")
+        for v,a in enumerate(lista_libros):
+            print(f"{v} -> {a.get_titulo()}, {a.get_genero()}, {a.get_isbn()}, {a.get_editorial()}",end=" ")
+            a.mostrar_autores()
+
+    def agregar_libro(self):
+        print("Ingrese los siguientes datos del libro: ")
+        nm=self.libro
+        nm.set_titulo(input("Título del libro: ").title())
+        nm.set_genero(input("Género del libro: ").lower())
+        nm.set_isbn(input("ID o ISBN: ").upper())
+        nm.set_id(int(self.get_id_last_item())+1)
+        nm.set_editorial(input("Editorial: "))
+        nmk=int(input("Ingrese la cantidad de autores: "))
+        autor=[]
+        for vk in range(nmk):
+            a=input(f"Ingrese el autor {vk+1}: ")
+            nm.set_autor(a)
+        
+        self.set_list(nm)
+        print("Libro agregado a la coleccion")
+
+    def eliminar_libro(self):
+        eliminar=input("Ingrese el título del libro: ").lower()
+        for el in self.lista_libros:
+            if el.get_titulo().lower()==eliminar:
+                self.lista_libros.remove(el)
+                return True
+        return False
 def buscar_libro():
     print("Buscar libro por ISBN o por título")
     busqueda=input("Ingrese ISBN o título del libro: ")
