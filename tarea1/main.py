@@ -86,4 +86,50 @@ def guardar_libros():
             mi_dato=[[lib.titulo, lib.genero, lib.id_ISBN, lib.editorial, lib.autores]]
             escritura.writerows(mi_dato)
         print("¡Completado!")
+def menu():
+    recorrido=True
+    while recorrido:
+        print(" ")
+        print("Menu\n")
+        print("1.- Leer archivo (.CSV o .txt)")
+        print("2.- Listar libros")
+        print("3.- Agregar libro")
+        print("4.- Eliminar libro")
+        print("5.- Buscar libro por ISBN o por título")
+        print("6.- Ordenar libros por título")
+        print("7.- Buscar libros por autor, editorial o género")
+        print("8.- Buscar libros por número de autores")
+        print("9.- Editar o actualizar datos de un libro")
+        print("10.-Guardar libros (.CSV o .txt)")
+        print("11.-Salir")
+        print(" ")
+        try:
+            opcion=int(input('Ingrese una opción: '))
+            if opcion==1:
+                leer_archivo()
+            elif opcion==2:
+                listar_libros()
+            elif opcion==3:
+                agregar_libro()
+            elif opcion==4:
+                eliminar_libro()
+            elif opcion==5:
+                buscar_libro()
+            elif opcion==6:
+                ordenar_libros()
+            elif opcion==7:
+                buscar_libros_autor_eg()
+            elif opcion==8:
+                buscar_libros_num_autor()
+            elif opcion==9:
+                editar_libros()
+            elif opcion==10:
+                guardar_libros()
+            elif opcion==11:
+                recorrido=False
+            else:
+                print("Ingrese una opción de 1 a 11")
+        except Exception as ex:
+            print(f"¡Ocurrió un Error!, {ex}")
+menu()
 
