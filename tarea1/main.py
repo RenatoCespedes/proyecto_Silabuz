@@ -1,4 +1,6 @@
 import csv
+import os
+import time
 lista_libros=[]
 class Libro:
     def __init__(self):
@@ -177,7 +179,7 @@ class Sistema_libros:
             if x.get_genero().lower() ==  entrada:
                 print("Se encontro una coincidencia")
                 id,titulo,genero,isbn,editoria,_=x.get_attributes()
-                print(f"{id}, {titulo}, {isbn}, {editorial}, ",end="")
+                print(f"{id}, {titulo}, {isbn}, {editoria}, ",end="")
                 x.mostrar_autores()
     
     def buscar_libros_num_autor(self):
@@ -188,24 +190,66 @@ class Sistema_libros:
                 print(f"{id}, {titulo}, {genero}, {isbn}, {editorial}, ",end="")
                 x.mostrar_autores()
     
-def editar_libros():
-    print("Editar o actualizar datos de un libro")
-def guardar_libros():
-    print("Guardar libros (.CSV o .txt)")
-    mi_archivo=open('biblioteca.csv','w',newline='')
-    with mi_archivo:
-        escritura = csv.writer(mi_archivo)
-        escritura.writerows([["Título del libro, Género, ID_ISBN, Editorial, Autores"]])
-        for lib in lista_libros:
-            mi_dato=[[lib.titulo, lib.genero, lib.id_ISBN, lib.editorial, lib.autores]]
-            escritura.writerows(mi_dato)
-        print("¡Completado!")
+    def editar_libro(self):
+        id_libro=int(input("Ingrese el id del libro a modificar: "))
+        for x in self.lista_libros:
+            # print(type(x.get_id()))
+            if int(x.get_id())==id_libro:
+                id,titulo,genero,isbn,editorial,autor=x.get_attributes()
+                print(f"{id}, {titulo}, {genero}, {isbn}, {editorial}, ",end="")
+                x.mostrar_autores()
+                indice=self.lista_libros.index(x)
+                self.lista_libros.remove(x)
+                print("Las opciones a modificar son: ")
+                print("1.- Titulo\n2.- Genero\n3.- Isbn\n4.- editorial\n5.- autor(es)")
+                modif=int(input("Que desea modificar?: "))
+                while(modif not in [1,2,3,4,5]):
+                    modif=input("Opcion no valida, vuelve a intentar: ")
+                if modif==1:
+                    mod_title=input("Ingrese el nuevo titulo: ").title()
+                    titulo=mod_title
+                    x.set_attributes(id,mod_title,genero,isbn,editorial,autor)
+                elif modif==2:
+                    mod_genero=input("Ingrese el nuevo genero: ")
+                    genero=mod_genero
+                    x.set_attributes(id,titulo,mod_genero,isbn,editorial,autor)
+                elif modif==3:
+                    mod_isbn=input("Ingrese el nuevo isbn: ")
+                    isbn=mod_isbn
+                    x.set_attributes(id,titulo,genero,mod_isbn,editorial,autor)
+                elif modif==4:
+                    mod_edi=input("Ingrese la nueva editorial: ")
+                    editorial=mod_edi
+                    x.set_attributes(id,titulo,genero,isbn,mod_edi,autor)
+                elif modif==5:
+                    number=int(input("Cuantos desea agregar: "))
+                    autor=[]
+                    for i in range(number):
+                        mod_autor=input("Ingrese el autor: ")
+                        autor.append(mod_autor)
+                    x.set_attributes(id,titulo,genero,isbn,editorial,autor)
+                print("Atributos cambiados....")
+                id1,titulo1,genero1,isbn1,editorial1,autor1=x.get_attributes()
+                print(f"{id1}, {titulo1}, {genero1}, {isbn1}, {editorial1}, ",end="")
+                x.mostrar_autores()
+                self.lista_libros.insert(indice,x)
+    def guardar_libros(self):
+        print("Guardar libros en un archivo .CSV")
+        mi_archivo=open('biblioteca.csv','w',newline='')
+        with mi_archivo:
+            escritura = csv.writer(mi_archivo)
+            escritura.writerows([["ID,TITULO, GENERO, ISBN, EDITORIAL, AUTORES"]])
+            for lib in self.lista_libros:
+                id,titulo,genero,isbn,editorial,autor=lib.get_attributes()
+                mi_dato=[[id,titulo, genero, isbn, editorial, autor]]
+                escritura.writerows(mi_dato)
+            print("¡Completado!")
 def menu():
     recorrido=True
+    print("---------------- Bienvenido al Sistema ----------------\n")
     while recorrido:
-        print(" ")
-        print("Menu\n")
-        print("1.- Leer archivo (.CSV o .txt)")
+        print("*******Menu Biblioteca*******\n")
+        print("1.- Leer archivo .CSV")
         print("2.- Listar libros")
         print("3.- Agregar libro")
         print("4.- Eliminar libro")
@@ -217,33 +261,108 @@ def menu():
         print("10.-Guardar libros (.CSV o .txt)")
         print("11.-Salir")
         print(" ")
+        libro=Sistema_libros()
         try:
             opcion=int(input('Ingrese una opción: '))
             if opcion==1:
-                leer_archivo()
+                # entrada=input("Ingrese el archivo a leer: ")
+                libro.leer_archivo()
+                time.sleep(1)
+                input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')
             elif opcion==2:
-                listar_libros()
+                libro.listar_libros()
+                time.sleep(1)
+                input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')
             elif opcion==3:
-                agregar_libro()
+                libro.agregar_libro()
+                time.sleep(1)
+                input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')
             elif opcion==4:
-                eliminar_libro()
+                verificar=libro.eliminar_libro()
+                if verificar:
+                    print("Libro Eliminado")
+                else:
+                    print("No se encontro ningun libro con ese titulo")
+                time.sleep(1)
+                input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')
             elif opcion==5:
-                buscar_libro()
+                libro.buscar_libro()
+                time.sleep(1)
+                input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')
             elif opcion==6:
-                ordenar_libros()
+                libro.ordenar_libros()
+                time.sleep(1)
+                input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')
             elif opcion==7:
-                buscar_libros_autor_eg()
+                
+                while(True):
+                    print("1.- Buscar libro por autor")
+                    print("2.- Buscar libro por editorial")
+                    print("3.- Buscar libro por genero")
+                    print("4.- Atras")
+                    op=int(input("Ingrese una Opcion: "))
+                    if op==1:
+                        verify=libro.buscar_libros_autor()
+                        # time.sleep(1)
+                        input("Presiona enter para regresar al menu ........")
+                        os.system('cls')
+                    elif op==2:
+                        libro.buscar_libro_editorial()
+                        # time.sleep(1)
+                        input("Presiona enter para regresar al menu ........")
+                        os.system('cls')
+                    elif op==3:
+                        verify=libro.buscar_libro_genero()
+                        # time.sleep(1)
+                        input("Presiona enter para regresar al menu ........")
+                        os.system('cls')
+                    elif op==4:
+                        break
+                # time.sleep(1)
+                # input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')    
+
             elif opcion==8:
-                buscar_libros_num_autor()
+                print("Buscar libros por el número de autores")
+                libro.buscar_libros_num_autor()
+                time.sleep(1)
+                input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')
             elif opcion==9:
-                editar_libros()
+                # print("9.- Editar o actualizar datos de un libro")
+                libro.editar_libro()
+                time.sleep(1)
+                input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')
             elif opcion==10:
-                guardar_libros()
+                print("10.- Guardar Libro")
+                libro.guardar_libros()
+                time.sleep(1)
+                input("Presiona enter para regresar al menu ........")
+                # time.sleep(1)
+                os.system('cls')
             elif opcion==11:
+                print("Gracias por usar el sistema")
                 recorrido=False
             else:
                 print("Ingrese una opción de 1 a 11")
         except Exception as ex:
-            print(f"¡Ocurrió un Error!, {ex}")
+            print(f"¡Ocurrió un Error!, {ex}")              
+                    
 menu()
 
