@@ -10,7 +10,7 @@ class Libro:
         self.__editorial=""
         self.__autores=[]
 
-    #Metodos Set
+    #Funciones Set
     def set_id(self,i):
         self.__id=i
         
@@ -23,9 +23,7 @@ class Libro:
     def set_editorial(self,ed):
         self.__editorial=ed
     def set_autor(self,autor):
-        autor=autor.split(',')
-        for i in autor:
-            self.__autores.append(i)
+        self.__autores.append(autor)
     def set_attributes(self,id,titulo,genero,isbn,editorial,autores):
         self.__id=id
         self.__titulo=titulo
@@ -33,16 +31,53 @@ class Libro:
         self.__id_ISBN=isbn
         self.__editorial=editorial
         self.__autores=autores
-    #Metodos Get
+    #Funciones Get
     def get_attributes(self):
         return self.__id,self.__titulo,self.__genero,self.__id_ISBN,self.__editorial,self.__autores
     
+    def get_titulo(self):
+        return self.__titulo
+    def get_autores(self):
+        return self.__autores
+    def get_editorial(self):
+        return self.__editorial
     def get_archivo(self):
         return self.__archivo
-    def mostrar_libro(self):
-        id,tit,gen,isb,edi,auto=self.get_attributes()
-        print(f"{tit}, {gen}, {id}, {isb}, {edi}, {auto}")
+    def get_genero(self):
+        return self.__genero
+    def get_id(self):
+        return self.__id
+    def get_isbn(self):
+        return self.__id_ISBN
+    
+    #Funciones
+    def mostrar_autores(self):
+        auto=self.__autores
+        for i in range(len(auto)):
+            if(i==len(auto)-1):
+                print(f"{auto[i]}",end="\n")
+            else:
+                print(f"{auto[i]}",end=" ")
 
+class Sistema_libros:
+    def __init__(self,lista=[]):
+        self.__archivo=""
+        self.libro=Libro()
+        self.lista_libros=lista
+    #Funciones SET
+    def set_list(self,libro):
+        self.lista_libros.append(libro)
+    
+    def set_archivo(self,y):
+        self.__archivo=y
+    #Funciones GET
+    def get_archivo(self):
+        return self.__archivo
+    def get_id_last_item(self):
+        a=self.lista_libros[-1]
+        id,_,_,_,_,_=a.get_attributes()
+        return id
+    #Funciones
 
 def leer_archivo():
     print("Leer archivos CSV o txt")
