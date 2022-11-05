@@ -98,3 +98,43 @@ if tipo in types_pokemon:
 for v,k_pokemon in enumerate(pokemons_por_habitat, start=1):
     print(f'\nLISTA N° {v}')
     print_nombre_habilidad_url(k_pokemon)
+
+def listar_generacion():
+    print("Listar pokemon por generación")
+def listar_forma():
+    print("Listar pokemon por forma")
+def listar_habilidad():
+    print("Listar pokemon por habilidad")
+def listar_habitat():
+    print("Listar pokemon por habitat")
+def listar_tipo():
+    print("Listar pokemon por tipo")
+def menu():
+    opciones=True
+    while opciones:
+        print("MENU")
+        print("Opción 1: Listar pokemons por generación")
+        print("Opción 2: Listar pokemons por forma")
+        print("Opción 3: Listar pokemons por habilidad")
+        print("Opción 4: Listar pokemons por habitat")
+        print("Opción 5: Listar pokemons por tipo")
+        print("Opción 6: Salir")
+        try:
+            opcion=int(input("Digite una opción (número): "))
+            if opcion==1:
+                listar_generacion()
+            elif opcion==2:
+                listar_forma()
+            elif opcion==3:
+                listar_habilidad()
+            elif opcion==4:
+                listar_habitat()
+            elif opcion==5:
+                listar_tipo()
+            elif opcion==6:
+                opciones=False
+            else:
+                print("Ingrese de 1 a 6")
+        except Exception as ex:
+            print("¡Ocurrió un error! -> ", ex)
+menu()
