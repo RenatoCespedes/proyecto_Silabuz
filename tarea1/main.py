@@ -57,9 +57,9 @@ class Libro:
         auto=self.__autores
         for i in range(len(auto)):
             if(i==len(auto)-1):
-                print(f"{auto[i]}",end="\n")
+                print("{:<8}".format(auto[i]),end="\n")
             else:
-                print(f"{auto[i]}",end=" ")
+                print("{:<8}".format(auto[i]),end=",")
 
 class Sistema_libros:
     def __init__(self,lista=[]):
@@ -82,7 +82,20 @@ class Sistema_libros:
     #Funciones
     
     def leer_archivo(self):
-        name=input("Ingrese el nombre archivo csv a cargar: ")
+        while(True):
+            print("1.-Cargar archivo csv")
+            print("2.-Cargar archivo por defecto")
+            opcion=int(input("Ingrese una opcion: "))
+            if opcion==1:
+                name=input("Ingrese el nombre archivo csv a cargar: ")
+                break
+            elif opcion==2:
+                name='libro.csv'
+                break
+            else:
+                print("Opcion valida")
+                time.sleep(2)
+                os.system('cls')
         with open(name) as f:
             x=csv.reader(f)
             next(x)
@@ -107,9 +120,11 @@ class Sistema_libros:
                 self.lista_libros.append(new_val)
     
     def listar_libros(self):
-        print("Listado de libros")
-        for v,a in enumerate(lista_libros):
-            print(f"{v} -> {a.get_titulo()}, {a.get_genero()}, {a.get_isbn()}, {a.get_editorial()}",end=" ")
+        print("{:<38} {:<2}".format('','Listado de libros'.upper()))
+        print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Titulo','Genero','ISBN','Editorial','Autores'))
+        for v,a in enumerate(self.lista_libros,start=1):
+            id,tit,gen,isb,edi,auto=a.get_attributes()
+            print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, tit, gen, isb, edi),end=" ")
             a.mostrar_autores()
 
     def agregar_libro(self):
@@ -138,73 +153,82 @@ class Sistema_libros:
         return False
     def buscar_libro(self):
         busqueda=input("Ingrese ISBN o título del libro: ").lower()
+        print("{:<38} {:<2}".format('','Resultados de la Busqueda'.upper()))
+        print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Titulo','Genero','ISBN','Editorial','Autores'))
         for k in self.lista_libros:
             if k.get_isbn().lower()==busqueda or k.get_titulo().lower()==busqueda:
                 id,titulo,genero,isbn,editoria,_=k.get_attributes()
-                print(f"{id} ,{titulo}, {genero}, {isbn}, {editoria}, ",end="")
+                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editoria),end=" ")
                 k.mostrar_autores()
     def ordenar_libros(self):
         orden_lista=[]
+        print("{:<38} {:<2}".format('','Libros ordenados por título'.upper()))
         orden_lista=[i.get_titulo().lower() for i in self.lista_libros]
         orden_lista_titulo=sorted(orden_lista)
+        print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Titulo','Genero','ISBN','Editorial','Autores'))
         for kv2 in orden_lista_titulo:
             for kv1 in self.lista_libros:
                 if kv2==kv1.get_titulo().lower():
                     id,titulo,genero,isbn,editoria,_=kv1.get_attributes()
-                    print(f"{titulo}, {genero}, {isbn}, {editoria}, ",end="")
+                    print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editoria),end=" ")
                     kv1.mostrar_autores()
-    def buscar_libros_autor_eg(self):
-        print("Buscar libros por autor, editorial o género")
-        print("Buscar libro por autor")
+    def buscar_libros_autor(self):
         entrada=input("Ingrese el autor del libro: ").lower()
+        print("{:<38} {:<2}".format('','Resultados de la Busqueda'.upper()))
+        print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Titulo','Genero','ISBN','Editorial','Autores'))
         for nk in self.lista_libros:
             for mk in nk.get_autores():
                 if mk.lower()==entrada:
                     id,titulo,genero,isbn,editoria,_=nk.get_attributes()
+                    print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editoria),end=" ")
                     nk.mostrar_autores()
-                    print(f"{titulo}, {genero}, {isbn}, {editoria} ")
 
     def buscar_libro_editorial(self):
         entrada=input("Ingrese la editorial del libro: ").lower()
+        print("{:<38} {:<2}".format('','Resultados de la Busqueda'.upper()))
+        print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Titulo','Genero','ISBN','Editorial','Autores'))
         for x in self.lista_libros:
             if x.get_editorial().lower() ==  entrada:
-                print("Se encontro una coincidencia")
                 id,titulo,genero,isbn,editoria,_=x.get_attributes()
-                print(f"{id}, {titulo}, {genero}, {isbn}, ",end="")
+                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editoria),end=" ")
                 x.mostrar_autores()
     
     def buscar_libro_genero(self):
         entrada=input("Ingrese el genero del libro: ").lower()
+        print("{:<38} {:<2}".format('','Resultados de la Busqueda'.upper()))
+        print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Titulo','Genero','ISBN','Editorial','Autores'))
         for x in self.lista_libros:
             if x.get_genero().lower() ==  entrada:
-                print("Se encontro una coincidencia")
                 id,titulo,genero,isbn,editoria,_=x.get_attributes()
-                print(f"{id}, {titulo}, {isbn}, {editoria}, ",end="")
+                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editoria),end=" ")
                 x.mostrar_autores()
     
     def buscar_libros_num_autor(self):
         num_autor=int(input("Ingrese la cantidad de autores: "))
+        print("{:<38} {:<2}".format('','Resultados de la Busqueda'.upper()))
+        print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Titulo','Genero','ISBN','Editorial','Autores'))
         for x in self.lista_libros:
             if len(x.get_autores())==num_autor:
                 id,titulo,genero,isbn,editorial,_=x.get_attributes()
-                print(f"{id}, {titulo}, {genero}, {isbn}, {editorial}, ",end="")
+                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editorial),end=" ")
                 x.mostrar_autores()
     
     def editar_libro(self):
         id_libro=int(input("Ingrese el id del libro a modificar: "))
         for x in self.lista_libros:
-            # print(type(x.get_id()))
             if int(x.get_id())==id_libro:
                 id,titulo,genero,isbn,editorial,autor=x.get_attributes()
-                print(f"{id}, {titulo}, {genero}, {isbn}, {editorial}, ",end="")
+                print("{:<38} {:<2}".format('','Atributo cambiado'.upper()))
+                print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Titulo','Genero','ISBN','Editorial','Autores'))
+                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editorial),end=" ")
                 x.mostrar_autores()
                 indice=self.lista_libros.index(x)
                 self.lista_libros.remove(x)
                 print("Las opciones a modificar son: ")
-                print("1.- Titulo\n2.- Genero\n3.- Isbn\n4.- editorial\n5.- autor(es)")
+                print("1.- Titulo\n2.- Genero\n3.- Isbn\n4.- editorial\n5.- autor(es)\n6.- Atras")
                 modif=int(input("Que desea modificar?: "))
                 while(modif not in [1,2,3,4,5]):
-                    modif=input("Opcion no valida, vuelve a intentar: ")
+                    modif=int(input("Opcion no valida, vuelve a intentar: "))
                 if modif==1:
                     mod_title=input("Ingrese el nuevo titulo: ").title()
                     titulo=mod_title
@@ -228,9 +252,10 @@ class Sistema_libros:
                         mod_autor=input("Ingrese el autor: ")
                         autor.append(mod_autor)
                     x.set_attributes(id,titulo,genero,isbn,editorial,autor)
-                print("Atributos cambiados....")
+                print("{:<38} {:<2}".format('','Atributo cambiado'.upper()))
+                print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Titulo','Genero','ISBN','Editorial','Autores'))
                 id1,titulo1,genero1,isbn1,editorial1,autor1=x.get_attributes()
-                print(f"{id1}, {titulo1}, {genero1}, {isbn1}, {editorial1}, ",end="")
+                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editorial),end=" ")
                 x.mostrar_autores()
                 self.lista_libros.insert(indice,x)
     def guardar_libros(self):
@@ -265,23 +290,19 @@ def menu():
         try:
             opcion=int(input('Ingrese una opción: '))
             if opcion==1:
-                # entrada=input("Ingrese el archivo a leer: ")
                 libro.leer_archivo()
                 time.sleep(1)
                 input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')
             elif opcion==2:
                 libro.listar_libros()
                 time.sleep(1)
                 input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')
             elif opcion==3:
                 libro.agregar_libro()
                 time.sleep(1)
                 input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')
             elif opcion==4:
                 verificar=libro.eliminar_libro()
@@ -291,19 +312,16 @@ def menu():
                     print("No se encontro ningun libro con ese titulo")
                 time.sleep(1)
                 input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')
             elif opcion==5:
                 libro.buscar_libro()
                 time.sleep(1)
                 input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')
             elif opcion==6:
                 libro.ordenar_libros()
                 time.sleep(1)
                 input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')
             elif opcion==7:
                 
@@ -314,25 +332,19 @@ def menu():
                     print("4.- Atras")
                     op=int(input("Ingrese una Opcion: "))
                     if op==1:
-                        verify=libro.buscar_libros_autor()
-                        # time.sleep(1)
+                        libro.buscar_libros_autor()
                         input("Presiona enter para regresar al menu ........")
                         os.system('cls')
                     elif op==2:
                         libro.buscar_libro_editorial()
-                        # time.sleep(1)
                         input("Presiona enter para regresar al menu ........")
                         os.system('cls')
                     elif op==3:
                         verify=libro.buscar_libro_genero()
-                        # time.sleep(1)
                         input("Presiona enter para regresar al menu ........")
                         os.system('cls')
                     elif op==4:
                         break
-                # time.sleep(1)
-                # input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')    
 
             elif opcion==8:
@@ -340,21 +352,17 @@ def menu():
                 libro.buscar_libros_num_autor()
                 time.sleep(1)
                 input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')
             elif opcion==9:
-                # print("9.- Editar o actualizar datos de un libro")
                 libro.editar_libro()
                 time.sleep(1)
                 input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')
             elif opcion==10:
                 print("10.- Guardar Libro")
                 libro.guardar_libros()
                 time.sleep(1)
                 input("Presiona enter para regresar al menu ........")
-                # time.sleep(1)
                 os.system('cls')
             elif opcion==11:
                 print("Gracias por usar el sistema")
