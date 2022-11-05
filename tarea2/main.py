@@ -6,6 +6,18 @@ def print_list(lista):
         else:
             print(i,elem,end=' \t ')
 
+def print_nombre_habilidad_url(nombre):
+    pokemon_x=f'https://pokeapi.co/api/v2/pokemon/{nombre}'
+    resp = requests.get(pokemon_x)
+    dato_pokemon=resp.json()
+    lista_de_habilidades = [habil['ability']['name'] for habil in dato_pokemon['abilities']]
+    url_imagen= dato_pokemon['sprites']['other']
+    url_pokemon=url_imagen['official-artwork']['front_default']
+    print('---------------------------------------------------------------'*2)
+    print(f'Nombre del pokemon: {nombre}')
+    print(f'Habilidades de {nombre}: ',', '.join(lista_de_habilidades))
+    print(f'URL de la imagen: ',url_pokemon)
+    print('---------------------------------------------------------------'*2)
 
 
 #Opción 1: Listar pokemons por generación. Se ingresa alguna generación (1, 2, 3, ..) 
