@@ -1,33 +1,52 @@
 import requests
-# def print_list(lista):
-#     for i,elem in enumerate(lista,start=1):
-#         if i%3==0:
-#             print(i,elem,end='\n')
-#         else:
-#             print(i,elem,end=' \t ')
 
-def print_nombre_habilidad_url(nombre):
-    pokemon_x=f'https://pokeapi.co/api/v2/pokemon/{nombre}'
-    resp = requests.get(pokemon_x)
-    dato_pokemon=resp.json()
-    lista_de_habilidades = [habil['ability']['name'] for habil in dato_pokemon['abilities']]
-    url_imagen= dato_pokemon['sprites']['other']
-    url_pokemon=url_imagen['official-artwork']['front_default']
-    print('---------------------------------------------------------------'*2)
-    print(f'Nombre del pokemon: {nombre}')
-    print(f'Habilidades de {nombre}: ',', '.join(lista_de_habilidades))
-    print(f'URL de la imagen: ',url_pokemon)
-    print('---------------------------------------------------------------'*2)
+class Pokemon:
+    def __init__(self):
+        self.__nombre=""
+        self.__habilidades=""
+        self.__url=[]
+    #SET
+    def set_nombre(self,nombre):
+        self.__nombre=nombre
+    def set_atributos(self,habilidades):
+        self.__habilidades=habilidades
+    def set_atributos(self,url):
+        self.__url=url
+    #GET    
+    def get_atributos(self):
+        return self.__nombre, self.__habilidades,self.__url
+    def get_nombre(self):
+        return self.__nombre
+    def get_habilidades(self):
+        return self.__habilidades
+    def get_url(self):
+        return self.__url
+    #Funciones
+    def print_nombre_habilidad_url(self):
+        dato_pokemon=extract_json(f'https://pokeapi.co/api/v2/pokemon/{self.__nombre}')
+        self.__habilidades = extract_habilidades(dato_pokemon)
+        url_imagen= dato_pokemon['sprites']['other']
+        self.__url=url_imagen['official-artwork']['front_default']
+        print('---------------------------------------------------------------'*2)
+        print(f'Nombre del pokemon: {self.__nombre}')
+        print(f'Habilidades de {self.__nombre}: ',', '.join(self.__habilidades))
+        print(f'URL de la imagen: ',self.__url)
+        print('---------------------------------------------------------------'*2)
+
+def extract_json(url):
+    datos=requests.get(url,stream=True)
+    datos=datos.json()
+    return datos
+def extract_habilidades(datos):
+    return [elem['ability']['name'] for elem in datos['abilities']]
+
 #Opción 1: Listar pokemons por generación. Se ingresa alguna generación (1, 2, 3, ..) 
 # y se listan todos los pokemon respectivos.
 def listar_generacion():
     print("Listar pokemon por generación")
     generation=int(input("Ingrese la generación de pokemones a mostrar (1,2,..,8): "))
-    data=requests.get(f"https://pokeapi.co/api/v2/generation/{generation}")
-
-    data=data.json()
+    data=extract_json(f"https://pokeapi.co/api/v2/generation/{generation}")
     pokemons_in_generation=[i['name'] for i in data['pokemon_species']]
-    # print_list(pokemons_in_generation)
     for v,k_pokemon in enumerate(pokemons_in_generation, start=1):
         print(f'\nLISTA N° {v}')
         print_nombre_habilidad_url(k_pokemon)
