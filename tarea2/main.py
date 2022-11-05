@@ -35,7 +35,7 @@ for v,k_pokemon in enumerate(pokemons_in_generation, start=1):
 
 # Opción 2: Listar pokemons por forma. Se ingresa alguna forma (deben sugerir valores)
 # y se listan todos los pokemons respectivos.
-print("Ejemplos: unown-a, cherrim-overcast, shellos-west, ... ")
+print("Sugerencias: unown-a, cherrim-overcast, shellos-west, ... ")
 forma_in=input("Ingrese una forma: ")
 data_form=requests.get(f"https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1320")
 resp_form=data_form.json()
@@ -68,7 +68,6 @@ for v,k_pokemon in enumerate(pokemons, start=1):
 #Opción 4: Listar pokemons por habitat. 
 # Se deben sugerir opciones a ingresar para interactuar.
 
-print("Opción 4")
 print('Sugerencias: cave, forest, grassland, etc. ')
 habitat_in=input("ingrese un habitat: ")
 data_habitat=requests.get(f"https://pokeapi.co/api/v2/pokemon-habitat/")
