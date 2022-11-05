@@ -48,24 +48,18 @@ if ability in list_of_abilities:
 
 #Opción 4: Listar pokemons por habitat. 
 # Se deben sugerir opciones a ingresar para interactuar.
-print("Opción 4")
-opcion=True
-habitat_pokemon={}
-nm=1
-while opcion:
-    pokemon_habitat=f'https://pokeapi.co/api/v2/pokemon-habitat/{nm}/'
-    resp_hab = requests.get(pokemon_habitat)
-    nm+=1
-    if f'{resp_hab}'=='<Response [200]>':
-        dato_hab=resp_hab.json()
-        a_hab={dato_hab['name']:[k['name'] for k in dato_hab["pokemon_species"]]}
-        habitat_pokemon.update(a_hab)
-    else:
-      opcion=False
-print('Ejemplos de habitat: cave, forest, grassland, etc. ')
-habitat_in=input('Ingrese un habitat: ')
-print('Los pokemons son: ', ', '.join(habitat_pokemon[f'{habitat_in}']))
 
+print("Opción 4")
+print('Ejemplos de habitat: cave, forest, grassland, etc. ')
+habitat_in=input("ingrese un habitat: ")
+data_habitat=requests.get(f"https://pokeapi.co/api/v2/pokemon-habitat/")
+resp_habitat=data_habitat.json()
+
+habitat_pokemon={v['name']:v['url'] for v in resp_habitat['results']}
+if habitat_in in habitat_pokemon:
+    data_of_habits=requests.get(habitat_pokemon[habitat_in])
+    resp_of_habits=data_of_habits.json()
+    pokemons_por_habitat=[k['name'] for k in resp_of_habits['pokemon_species']]
 
 
 #Opción 5: Listar pokemons por tipo. Se deben sugerir opciones a ingresar 
