@@ -20,21 +20,15 @@ print_list(pokemons_in_generation)
 
 # Opción 2: Listar pokemons por forma. Se ingresa alguna forma (deben sugerir valores)
 # y se listan todos los pokemons respectivos.
-print('\n Cargando datos opción 2 ...')
-a_form={}
-test_form=True
-limite=400 # maximo->limite=906
-for n_form in range(200,limite):#posibles valores a encontrar
-    pokemon_form=f'https://pokeapi.co/api/v2/pokemon-form/{n_form}/'
-    resp_form = requests.get(pokemon_form)
-    dato_form=resp_form.json()
-    if dato_form['form_name'] != '':
-        name_poke=dato_form['pokemon']['name']
-        a={dato_form['form_name']:name_poke}
-        a_form.update(a)
-print(f"Ejemplo de formas: {a_form.keys()}")
-form_in=input("Ingrese una forma: ")
-print("Pokemon: ", a_form[form_in])
+forma_in=input("ingrese una forma: ")
+data_form=requests.get(f"https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1320")
+resp_form=data_form.json()
+
+form_pokemon={v['name']:v['url'] for v in resp_form['results']}
+if forma_in in form_pokemon:
+    data_of_forms=requests.get(form_pokemon[forma_in])
+    data_of_forms=data_of_forms.json()
+    pokemon_s=data_of_forms['pokemon']['name']
 
 #Opción 3: Listar pokemons por habilidad. Se deben sugerir opciones a 
 # ingresar para interactuar.
