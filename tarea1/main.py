@@ -274,7 +274,7 @@ class Sistema_libros:
                 print("{:<38} {:<2}".format('','Atributo cambiado'.upper()))
                 print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Título','Género','ISBN','Editorial','Autores'))
                 id1,titulo1,genero1,isbn1,editorial1,autor1=x.get_attributes()
-                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editorial),end=" ")
+                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id1, titulo1, genero1, isbn1, editorial1),end=" ")
                 x.mostrar_autores()
                 self.lista_libros.insert(indice,x)
     # def 
