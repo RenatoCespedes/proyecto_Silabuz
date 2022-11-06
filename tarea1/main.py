@@ -80,6 +80,19 @@ class Sistema_libros:
         id,_,_,_,_,_=a.get_attributes()
         return id
     #Funciones
+    def verify_title_if_exist(self,name):
+        for i in self.lista_libros:
+            titulo=i.get_titulo()
+            if name.lower()==titulo.lower():
+                return True
+        return False
+    def verify_isbn_if_exist(self,name):
+        for i in self.lista_libros:
+            isbn=i.get_isbn()
+            if name.lower()==isbn.lower():
+                return True
+        return False
+
     
     def leer_archivo(self):
         while(True):
@@ -101,7 +114,7 @@ class Sistema_libros:
             next(x)
             for row in x :
                 new_val=Libro()
-                new_val.set_id(row[0])
+                new_val.set_id(1 if self.lista_libros==[] else int(self.get_id_last_item())+1)
                 new_val.set_titulo(row[1])
                 new_val.set_genero(row[2])
                 new_val.set_isbn(row[3])
@@ -116,8 +129,11 @@ class Sistema_libros:
 
                 for k in val_autor:
                     new_val.set_autor(k)
-
-                self.lista_libros.append(new_val)
+                if self.verify_title_if_exist(row[1]) or self.verify_isbn_if_exist(row[3]):
+                    print("Dicha informacion ya esta registrado")
+                    continue
+                else:
+                    self.lista_libros.append(new_val)
     
     def listar_libros(self):
         print("{:<38} {:<2}".format('','Listado de libros'.upper()))
@@ -130,19 +146,23 @@ class Sistema_libros:
     def agregar_libro(self):
         print("Ingrese los siguientes datos del libro: ")
         nm=self.libro
-        nm.set_titulo(input("Título del libro: ").title())
+        titulo=input("Título del libro: ")
+        nm.set_titulo(titulo.title())
         nm.set_genero(input("Género del libro: ").lower())
-        nm.set_isbn(input("ISBN: ").upper())
-        nm.set_id(int(self.get_id_last_item())+1)
+        isbn=input("ISBN: ")
+        nm.set_isbn(isbn.upper())
+        nm.set_id(1 if self.lista_libros==[] else int(self.get_id_last_item())+1)
         nm.set_editorial(input("Editorial: "))
         nmk=int(input("Ingrese la cantidad de autores: "))
         autor=[]
         for vk in range(nmk):
             a=input(f"Ingrese el autor {vk+1}: ")
             nm.set_autor(a)
-        
-        self.set_list(nm)
-        print("Libro agregado a la colección")
+        if self.verify_title_if_exist(titulo) or self.verify_isbn_if_exist(isbn):
+            print("Dicha informacion ya esta registrado")
+        else:
+            self.set_list(nm)
+            print("Libro agregado a la colección")
 
     def eliminar_libro(self):
         eliminar=input("Ingrese el título del libro: ").lower()
@@ -274,9 +294,10 @@ class Sistema_libros:
                 print("{:<38} {:<2}".format('','Atributo cambiado'.upper()))
                 print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Título','Género','ISBN','Editorial','Autores'))
                 id1,titulo1,genero1,isbn1,editorial1,autor1=x.get_attributes()
-                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editorial),end=" ")
+                print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id1, titulo1, genero1, isbn1, editorial1),end=" ")
                 x.mostrar_autores()
                 self.lista_libros.insert(indice,x)
+    # def 
     def guardar_libros(self):
         print("Guardar libros en un archivo .CSV")
         mi_archivo=open('biblioteca.csv','w',newline='')
@@ -392,4 +413,3 @@ def menu():
             print(f"¡Ocurrió un Error!, {ex}")              
                     
 menu()
-
