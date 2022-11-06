@@ -80,6 +80,19 @@ class Sistema_libros:
         id,_,_,_,_,_=a.get_attributes()
         return id
     #Funciones
+    def verify_title_if_exist(self,name):
+        for i in self.lista_libros:
+            titulo=i.get_titulo()
+            if name.lower()==titulo.lower():
+                return True
+        return False
+    def verify_isbn_if_exist(self,name):
+        for i in self.lista_libros:
+            isbn=i.get_isbn()
+            if name.lower()==isbn.lower():
+                return True
+        return False
+
     
     def leer_archivo(self):
         while(True):
@@ -101,7 +114,7 @@ class Sistema_libros:
             next(x)
             for row in x :
                 new_val=Libro()
-                new_val.set_id(row[0])
+                new_val.set_id(1 if self.lista_libros==[] else int(self.get_id_last_item())+1)
                 new_val.set_titulo(row[1])
                 new_val.set_genero(row[2])
                 new_val.set_isbn(row[3])
@@ -133,7 +146,7 @@ class Sistema_libros:
         nm.set_titulo(input("Título del libro: ").title())
         nm.set_genero(input("Género del libro: ").lower())
         nm.set_isbn(input("ISBN: ").upper())
-        nm.set_id(int(self.get_id_last_item())+1)
+        nm.set_id(1 if self.lista_libros==[] else int(self.get_id_last_item())+1)
         nm.set_editorial(input("Editorial: "))
         nmk=int(input("Ingrese la cantidad de autores: "))
         autor=[]
