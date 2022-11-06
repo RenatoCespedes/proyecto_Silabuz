@@ -28,7 +28,7 @@ class Pokemon:
         url_imagen= dato_pokemon['sprites']['other']
         self.__url=url_imagen['official-artwork']['front_default']
         print('---------------------------------------------------------------'*2)
-        print(f'Nombre del pokemon: {self.__nombre}')
+        print(f'Nombre del Pokémon: {self.__nombre}')
         print(f'Habilidades de {self.__nombre}: ',', '.join(self.__habilidades))
         print(f'URL de la imagen: ',self.__url)
         print('---------------------------------------------------------------'*2)
@@ -36,17 +36,17 @@ class Pokemon:
 class Sistema:
     def listar_generacion(self):
         poke=Pokemon()
-        generation=int(input("Ingrese la generación de pokemones a mostrar (1,2,..,8): "))
+        generation=int(input("Ingrese la generación de Pokémones a mostrar (1,2,..,8): "))
         data=extract_json(f"https://pokeapi.co/api/v2/generation/{generation}")
         pokemons_in_generation=[i['name'] for i in data['pokemon_species']]
         for v,k_pokemon in enumerate(pokemons_in_generation, start=1):
             poke.set_nombre(k_pokemon)
-            print(f'\nPOKEMON N° {v}')
+            print(f'\nPOKÉMON N° {v}')
             poke.print_nombre_habilidad_url()
         
     def listar_forma(self):
         poke=Pokemon()
-        print("Sugerencias: unown-a, cherrim-overcast, shellos-west, ... ")
+        print("Sugerencias: unown-a, unown-z, cherrim-overcast, shellos-west, ... ")
         forma_in=input("Ingrese una forma: ")
         data_form=extract_json(f"https://pokeapi.co/api/v2/pokemon-form/?offset=0&limit=1320")
 
@@ -57,7 +57,7 @@ class Sistema:
             print('\nRESULTADO: ')  
             poke.print_nombre_habilidad_url()
         else:
-            print("No se encontro ningun pokemon con esta forma")
+            print("No se encontró ningún Pokémon con esta forma")
     
     def listar_habilidad(self):
         poke=Pokemon()
@@ -74,15 +74,15 @@ class Sistema:
             # print_list(pokemons)
             for v,k_pokemon in enumerate(pokemons, start=1):
                 poke.set_nombre(k_pokemon)
-                print(f'\nPOKEMON N° {v}')
+                print(f'\nPOKÉMON N° {v}')
                 poke.print_nombre_habilidad_url()
         else:
-            print("No se encontro ningun pokemon con esa habilidad")
+            print("No se encontró ningún Pokémon con esa habilidad")
     def listar_habitat(self):
         poke=Pokemon()
         pokemons_por_habitat=[]
         print('Sugerencias: cave, forest, grassland, etc. ')
-        habitat_in=input("ingrese un habitat: ")
+        habitat_in=input("ingrese un hábitat: ")
         data_habitat=extract_json(f"https://pokeapi.co/api/v2/pokemon-habitat/")
 
 
@@ -92,10 +92,10 @@ class Sistema:
             pokemons_por_habitat=[k['name'] for k in data_of_habits['pokemon_species']]
             for v,k_pokemon in enumerate(pokemons_por_habitat, start=1):
                 poke.set_nombre(k_pokemon)
-                print(f'\nPOKEMON N° {v}')
+                print(f'\nPOKÉMON N° {v}')
                 poke.print_nombre_habilidad_url()
         else:
-            print("No se encontro ningun pokemon con esa habitat")
+            print("No se encontró ningún Pokémon con esa habitat")
     def listar_tipo(self):
         poke=Pokemon()
 
@@ -110,10 +110,10 @@ class Sistema:
 
             for v,k_pokemon in enumerate(pokemons, start=1):
                 poke.set_nombre(k_pokemon)
-                print(f'\nPOKEMON N° {v}')
+                print(f'\nPOKÉMON N° {v}')
                 poke.print_nombre_habilidad_url()
         else:
-            print("No se encontro ningun pokemon de este tipo")
+            print("No se encontró ningún Pokémon de este tipo")
         
 #Funciones auxiliares
 def extract_json(url):
@@ -130,13 +130,15 @@ def menu():
     sistema_poke=Sistema()
     opciones=True
     while opciones:
-        print("MENU")
+        print("==========================================\n")
+        print("_________________ MENÚ ___________________\n")
         print("Opción 1: Listar pokemons por generación")
         print("Opción 2: Listar pokemons por forma")
         print("Opción 3: Listar pokemons por habilidad")
-        print("Opción 4: Listar pokemons por habitat")
+        print("Opción 4: Listar pokemons por hábitat")
         print("Opción 5: Listar pokemons por tipo")
         print("Opción 6: Salir")
+        print("==========================================\n")
         try:
             opcion=int(input("Digite una opción (número): "))
             if opcion==1:
