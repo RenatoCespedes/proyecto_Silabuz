@@ -246,12 +246,31 @@ class Sistema_libros:
                     editorial=mod_edi
                     x.set_attributes(id,titulo,genero,isbn,mod_edi,autor)
                 elif modif==5:
-                    number=int(input("¿Cuántos desea agregar?: "))
-                    autor=[]
-                    for i in range(number):
-                        mod_autor=input("Ingrese el autor: ")
-                        autor.append(mod_autor)
-                    x.set_attributes(id,titulo,genero,isbn,editorial,autor)
+                    print("1.-Borrar autores del libro y agregar nuevos")
+                    print("2.- Modificar un autor")
+                    print("3.- Atrás")
+                    opcion=int(input("Ingrese una opcion: "))
+                    while(True):
+                        if opcion==1:
+                            number=int(input("¿Cuántos desea agregar?: "))
+                            autor=[]
+                            for i in range(number):
+                                mod_autor=input("Ingrese el autor: ")
+                                autor.append(mod_autor)
+                            x.set_attributes(id,titulo,genero,isbn,editorial,autor)
+                            break
+                        elif opcion==2:
+                            print("Que autor desea cambiar:")
+                            for i,j in enumerate(autor):
+                                print(f"{i+1}.- {j}")
+                            new_opcion=int(input("Ingrese una opcion: "))
+                            autor[new_opcion-1]=input("Ingrese el autor: ")
+                            x.set_attributes(id,titulo,genero,isbn,editorial,autor)
+                            break
+                        elif opcion==3:
+                            break
+                        else:
+                            print("Ingrese una opcion valida")
                 print("{:<38} {:<2}".format('','Atributo cambiado'.upper()))
                 print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Título','Género','ISBN','Editorial','Autores'))
                 id1,titulo1,genero1,isbn1,editorial1,autor1=x.get_attributes()
