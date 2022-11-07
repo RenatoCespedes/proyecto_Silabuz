@@ -198,7 +198,7 @@ class Sistema_libros:
         print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Título','Género','ISBN','Editorial','Autores'))
         for nk in self.lista_libros:
             for mk in nk.get_autores():
-                if mk.lower()==entrada:
+                if mk.lower().lstrip()==entrada:
                     id,titulo,genero,isbn,editoria,_=nk.get_attributes()
                     print("{:<4} {:<26} {:<15} {:<16} {:<14} ".format(id, titulo, genero, isbn, editoria),end=" ")
                     nk.mostrar_autores()
@@ -309,6 +309,15 @@ class Sistema_libros:
                 mi_dato=[[id,titulo, genero, isbn, editorial, autor]]
                 escritura.writerows(mi_dato)
             print("¡Completado!")
+#Funcion limpiar
+def pause_clear_console():
+    while(True):
+        if input("Presione enter para continuar....")!="":
+            pass
+        else:
+            os.system('cls')
+            break
+
 def menu():
     recorrido=True
     print("=========== BIENVENIDO AL SISTEMA ================\n")
@@ -332,38 +341,34 @@ def menu():
             opcion=int(input('Ingrese una opción: '))
             if opcion==1:
                 libro.leer_archivo()
-                time.sleep(1)
-                input("Presiona enter para regresar al menú...")
+                pause_clear_console()
                 os.system('cls')
             elif opcion==2:
                 libro.listar_libros()
-                time.sleep(1)
-                input("Presiona enter para regresar al menú...")
+                pause_clear_console()
                 os.system('cls')
             elif opcion==3:
                 libro.agregar_libro()
                 time.sleep(1)
-                input("Presiona enter para regresar al menú...")
-                os.system('cls')
+                pause_clear_console()
             elif opcion==4:
                 verificar=libro.eliminar_libro()
                 if verificar:
                     print("Libro Eliminado")
                 else:
                     print("No se encontró ningún libro con ese título")
-                time.sleep(1)
-                input("Presiona enter para regresar al menú...")
+                pause_clear_console()
                 os.system('cls')
             elif opcion==5:
+                print("Sugerencias de titulos: la ciuda y los perros, la ciudad de los tisicos, antiheroes")
+                print("Sugerencias de ISBN: 9789972404375, 9786124262708, 9788416858378")
                 libro.buscar_libro()
                 time.sleep(1)
-                input("Presiona enter para regresar al menú...")
-                os.system('cls')
+                pause_clear_console()
             elif opcion==6:
                 libro.ordenar_libros()
                 time.sleep(1)
-                input("Presiona enter para regresar al menú...")
-                os.system('cls')
+                pause_clear_console()
             elif opcion==7:
                 
                 while(True):
@@ -374,37 +379,28 @@ def menu():
                     op=int(input("Ingrese una opción: "))
                     if op==1:
                         libro.buscar_libros_autor()
-                        input("Presiona enter para regresar al menú...")
-                        os.system('cls')
+                        pause_clear_console()
                     elif op==2:
                         libro.buscar_libro_editorial()
-                        input("Presiona enter para regresar al menú...")
-                        os.system('cls')
+                        pause_clear_console()
                     elif op==3:
                         verify=libro.buscar_libro_genero()
-                        input("Presiona enter para regresar al menú...")
-                        os.system('cls')
+                        pause_clear_console()
                     elif op==4:
                         break
-                os.system('cls')    
+                pause_clear_console()    
 
             elif opcion==8:
                 print("Buscar libros por el número de autores")
                 libro.buscar_libros_num_autor()
-                time.sleep(1)
-                input("Presiona enter para regresar al menú...")
-                os.system('cls')
+                pause_clear_console()
             elif opcion==9:
                 libro.editar_libro()
-                time.sleep(1)
-                input("Presiona enter para regresar al menú...")
-                os.system('cls')
+                pause_clear_console()
             elif opcion==10:
-                print("10.- Guardar Libro")
+                print("Guardar Libro")
                 libro.guardar_libros()
-                time.sleep(1)
-                input("Presiona enter para regresar al menú...")
-                os.system('cls')
+                pause_clear_console()
             elif opcion==11:
                 print("Gracias por usar el sistema")
                 recorrido=False
