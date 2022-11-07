@@ -158,7 +158,7 @@ class Sistema_libros:
             nm.set_autor(a)
         if self.verify_isbn_if_exist(isbn):
             print(f"Existe un libro registrado con ISBN: {isbn} ")
-            print("El ISBN es el DNI del libro, por lo tanto, no puede haber dos o mas libros con el mismo ISBN")
+            print("El ISBN es el DNI del libro, por lo tanto, no puede haber dos o más libros con el mismo ISBN")
             print("Genere su ISBN del libro.")
         else:
             self.set_list(nm)
