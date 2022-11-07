@@ -1,5 +1,5 @@
 import requests
-
+import os
 class Pokemon:
     def __init__(self):
         self.__nombre=""
@@ -47,6 +47,7 @@ class Sistema:
             poke.set_number(u_pokemon)
             print(f'\nPOKÉMON N° {v}')
             poke.print_nombre_habilidad_url()
+        pause_clear_console()
         
     def listar_forma(self):
         poke=Pokemon()
@@ -62,6 +63,7 @@ class Sistema:
             poke.print_nombre_habilidad_url()
         else:
             print("No se encontró ningún Pokémon con esta forma")
+        pause_clear_console()
     
     def listar_habilidad(self):
         poke=Pokemon()
@@ -82,6 +84,7 @@ class Sistema:
                 poke.print_nombre_habilidad_url()
         else:
             print("No se encontró ningún Pokémon con esa habilidad")
+        pause_clear_console()
     def listar_habitat(self):
         poke=Pokemon()
         pokemons_por_habitat=[]
@@ -100,6 +103,7 @@ class Sistema:
                 poke.print_nombre_habilidad_url()
         else:
             print("No se encontró ningún Pokémon con esa habitat")
+        pause_clear_console()
     def listar_tipo(self):
         poke=Pokemon()
 
@@ -118,7 +122,8 @@ class Sistema:
                 poke.print_nombre_habilidad_url()
         else:
             print("No se encontró ningún Pokémon de este tipo")
-        
+        pause_clear_console()
+
 #Funciones auxiliares
 def extract_json(url):
     datos=requests.get(url,stream=True)
@@ -129,6 +134,13 @@ def extract_json(url):
 def extract_habilidades(datos):
     return [elem['ability']['name'] for elem in datos['abilities']]
 
+def pause_clear_console():
+    while(True):
+        if input("Presione enter para continuar....")!="":
+            pass
+        else:
+            os.system('cls')
+            break
 
 
 
@@ -158,6 +170,7 @@ def menu():
             elif opcion==5:
                 sistema_poke.listar_tipo()
             elif opcion==6:
+                print("Gracias por usar el sistema")
                 opciones=False
             else:
                 print("Ingrese de 1 a 6")
