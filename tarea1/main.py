@@ -342,14 +342,11 @@ def menu():
             if opcion==1:
                 libro.leer_archivo()
                 pause_clear_console()
-                os.system('cls')
             elif opcion==2:
                 libro.listar_libros()
                 pause_clear_console()
-                os.system('cls')
             elif opcion==3:
                 libro.agregar_libro()
-                time.sleep(1)
                 pause_clear_console()
             elif opcion==4:
                 verificar=libro.eliminar_libro()
@@ -358,16 +355,13 @@ def menu():
                 else:
                     print("No se encontró ningún libro con ese título")
                 pause_clear_console()
-                os.system('cls')
             elif opcion==5:
                 print("Sugerencias de titulos: la ciuda y los perros, la ciudad de los tisicos, antiheroes")
                 print("Sugerencias de ISBN: 9789972404375, 9786124262708, 9788416858378")
                 libro.buscar_libro()
-                time.sleep(1)
                 pause_clear_console()
             elif opcion==6:
                 libro.ordenar_libros()
-                time.sleep(1)
                 pause_clear_console()
             elif opcion==7:
                 
