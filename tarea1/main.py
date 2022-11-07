@@ -130,7 +130,7 @@ class Sistema_libros:
                 for k in val_autor:
                     new_val.set_autor(k)
                 if self.verify_title_if_exist(row[1]) or self.verify_isbn_if_exist(row[3]):
-                    print("Dicha informacion ya esta registrado")
+                    print("Dicha información ya esta registrado")
                     continue
                 else:
                     self.lista_libros.append(new_val)
@@ -146,20 +146,20 @@ class Sistema_libros:
     def agregar_libro(self):
         print("Ingrese los siguientes datos del libro: ")
         nm=self.libro
-        titulo=input("Título del libro: ")
-        nm.set_titulo(titulo.title())
+        nm.set_titulo(input("Título del libro: ").title())
         nm.set_genero(input("Género del libro: ").lower())
         isbn=input("ISBN: ")
         nm.set_isbn(isbn.upper())
         nm.set_id(1 if self.lista_libros==[] else int(self.get_id_last_item())+1)
         nm.set_editorial(input("Editorial: "))
         nmk=int(input("Ingrese la cantidad de autores: "))
-        autor=[]
         for vk in range(nmk):
             a=input(f"Ingrese el autor {vk+1}: ")
             nm.set_autor(a)
-        if self.verify_title_if_exist(titulo) or self.verify_isbn_if_exist(isbn):
-            print("Dicha informacion ya esta registrado")
+        if self.verify_isbn_if_exist(isbn):
+            print(f"Existe un libro registrado con ISBN: {isbn} ")
+            print("El ISBN es el DNI del libro, por lo tanto, no puede haber dos o más libros con el mismo ISBN")
+            print("Genere el ISBN de su libro.")
         else:
             self.set_list(nm)
             print("Libro agregado a la colección")
@@ -215,7 +215,7 @@ class Sistema_libros:
     
     def buscar_libro_genero(self):
         entrada=input("Ingrese el género del libro: ").lower()
-        print("{:<38} {:<2}".format('','Resultados de la Busqueda'.upper()))
+        print("{:<38} {:<2}".format('','Resultados de la Búsqueda'.upper()))
         print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Título','Género','ISBN','Editorial','Autores'))
         for x in self.lista_libros:
             if x.get_genero().lower() ==  entrada:
@@ -269,7 +269,7 @@ class Sistema_libros:
                     print("1.-Borrar autores del libro y agregar nuevos")
                     print("2.- Modificar un autor")
                     print("3.- Atrás")
-                    opcion=int(input("Ingrese una opcion: "))
+                    opcion=int(input("Ingrese una opción: "))
                     while(True):
                         if opcion==1:
                             number=int(input("¿Cuántos desea agregar?: "))
@@ -283,14 +283,14 @@ class Sistema_libros:
                             print("Que autor desea cambiar:")
                             for i,j in enumerate(autor):
                                 print(f"{i+1}.- {j}")
-                            new_opcion=int(input("Ingrese una opcion: "))
+                            new_opcion=int(input("Ingrese una opción: "))
                             autor[new_opcion-1]=input("Ingrese el autor: ")
                             x.set_attributes(id,titulo,genero,isbn,editorial,autor)
                             break
                         elif opcion==3:
                             break
                         else:
-                            print("Ingrese una opcion valida")
+                            print("Ingrese una opción válida")
                 print("{:<38} {:<2}".format('','Atributo cambiado'.upper()))
                 print("{:<4} {:<26} {:<15} {:<16} {:<15} {:<12}".format('ID','Título','Género','ISBN','Editorial','Autores'))
                 id1,titulo1,genero1,isbn1,editorial1,autor1=x.get_attributes()
@@ -311,9 +311,9 @@ class Sistema_libros:
             print("¡Completado!")
 def menu():
     recorrido=True
-    print("---------------- Bienvenido al Sistema ----------------\n")
+    print("=========== BIENVENIDO AL SISTEMA ================\n")
     while recorrido:
-        print("*******Menú Biblioteca*******\n")
+        print("*************** MENÚ BIBLIOTECA ******************\n")
         print("1.- Leer archivo .CSV")
         print("2.- Listar libros")
         print("3.- Agregar libro")
@@ -326,6 +326,7 @@ def menu():
         print("10.-Guardar libros .CSV")
         print("11.-Salir")
         print(" ")
+        print("**************************************************\n")
         libro=Sistema_libros()
         try:
             opcion=int(input('Ingrese una opción: '))
@@ -370,7 +371,7 @@ def menu():
                     print("2.- Buscar libro por editorial")
                     print("3.- Buscar libro por género")
                     print("4.- Atrás")
-                    op=int(input("Ingrese una Opción: "))
+                    op=int(input("Ingrese una opción: "))
                     if op==1:
                         libro.buscar_libros_autor()
                         input("Presiona enter para regresar al menú...")
