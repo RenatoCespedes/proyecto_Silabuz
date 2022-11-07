@@ -146,20 +146,20 @@ class Sistema_libros:
     def agregar_libro(self):
         print("Ingrese los siguientes datos del libro: ")
         nm=self.libro
-        titulo=input("Título del libro: ")
-        nm.set_titulo(titulo.title())
+        nm.set_titulo(input("Título del libro: ").title())
         nm.set_genero(input("Género del libro: ").lower())
         isbn=input("ISBN: ")
         nm.set_isbn(isbn.upper())
         nm.set_id(1 if self.lista_libros==[] else int(self.get_id_last_item())+1)
         nm.set_editorial(input("Editorial: "))
         nmk=int(input("Ingrese la cantidad de autores: "))
-        autor=[]
         for vk in range(nmk):
             a=input(f"Ingrese el autor {vk+1}: ")
             nm.set_autor(a)
-        if self.verify_title_if_exist(titulo) or self.verify_isbn_if_exist(isbn):
-            print("Dicha informacion ya esta registrado")
+        if self.verify_isbn_if_exist(isbn):
+            print(f"Existe un libro registrado con ISBN: {isbn} ")
+            print("El ISBN es el DNI del libro, por lo tanto, no puede haber dos o mas libros con el mismo ISBN")
+            print("Genere su ISBN del libro.")
         else:
             self.set_list(nm)
             print("Libro agregado a la colección")
@@ -311,9 +311,9 @@ class Sistema_libros:
             print("¡Completado!")
 def menu():
     recorrido=True
-    print("---------------- Bienvenido al Sistema ----------------\n")
+    print("=========== BIENVENIDO AL SISTEMA ================\n")
     while recorrido:
-        print("*******Menú Biblioteca*******\n")
+        print("*************** MENÚ BIBLIOTECA ******************\n")
         print("1.- Leer archivo .CSV")
         print("2.- Listar libros")
         print("3.- Agregar libro")
@@ -326,6 +326,7 @@ def menu():
         print("10.-Guardar libros .CSV")
         print("11.-Salir")
         print(" ")
+        print("**************************************************\n")
         libro=Sistema_libros()
         try:
             opcion=int(input('Ingrese una opción: '))
