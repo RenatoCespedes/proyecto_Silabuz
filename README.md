@@ -21,6 +21,7 @@ Dicho programa debe tener un menu (a interactuar en la línea de comando) para:
               y se deben listar todos los libros que contengan 2 autores.
   - Opción 9: Editar o actualizar datos de un libro (título, género, ISBN, editorial y autores).
   - Opción 10: Guardar libros en archivo de disco duro (.txt o csv).
+  
 ***Nota: listar libros involucra: título, género, ISBN, editorial y autor(es)***
 ### **SOLUCION**
 La solución de esta tarea esta en [tarea1/main.py](tarea1/main.py).
@@ -34,6 +35,7 @@ Escribir un programa que tenga las siguientes opciones:
   - Opción 3: Listar pokemons por habilidad. Se deben sugerir opciones a ingresar para interactuar.
   - Opción 4: Listar pokemons por habitat. Se deben sugerir opciones a ingresar para interactuar.
   - Opción 5: Listar pokemons por tipo. Se deben sugerir opciones a ingresar para interactuar.
+  
 ***Nota: listar pokemons involucra: nombre, habilidad y URL de la imagen***
 ### **SOLUCION**
 La solución de esta tarea esta en [tarea2/main.py](tarea2/main.py)
