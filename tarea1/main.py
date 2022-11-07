@@ -340,7 +340,14 @@ def menu():
         try:
             opcion=int(input('Ingrese una opción: '))
             if opcion==1:
-                libro.leer_archivo()
+                try:
+                    libro.leer_archivo()
+                except:
+                    print("No se encontro archivo")
+                    print("La estructura del Archivo es: ")
+                    print("id,titulo,genero,isbn,editorial,autores")
+                    print("Ejemplo:")
+                    print("2,'La hora feliz','ficcion','99292929','vallejo','Luiz Ramos, Julia Valero'")
                 pause_clear_console()
             elif opcion==2:
                 libro.listar_libros()
